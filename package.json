@@ -13,10 +13,13 @@
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
     "echarts": "^4.8.0",
+    "moment": "^2.27.0",
+    "momentjs": "^2.0.0",
     "sockjs-client": "^1.4.0",
     "vue": "^2.6.11",
     "vue-echarts": "^5.0.0-beta.0",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vuesax": "^3.11.17"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

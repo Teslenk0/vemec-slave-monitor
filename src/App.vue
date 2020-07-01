@@ -1,92 +1,196 @@
 <template>
-    <b-row class="w-100 d-flex justify-content-center">
-        <b-col md="9" class="mt-4" style="border: 1px solid red">
-            <b-row>
-                <b-col md="9">
-                    <e-charts :options="polar"></e-charts>
-                </b-col>
-                <b-col md="3">Datos</b-col>
-            </b-row>
-        </b-col>
-    </b-row>
+    <vs-row vs-justify="center">
+        <vs-col style="margin-top: 16px" v-for="paciente in pacientes" v-bind:key="paciente.reporte.cedula"
+                vs-type="flex"
+                vs-justify="center" vs-align="center" vs-w="8">
+            <vs-card>
+                <vs-row style="margin-top: 4px">
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="9">
+                        <line-chart :chart-data="paciente.lineChartData"/>
+                    </vs-col>
+                    <vs-col vs-type="flex" vs-justify="center" vs-w="3">
+                        <vs-row vs-type="flex" vs-justify="center" class="col-der" vs-align="center"
+                                style="flex-direction: column">
 
+                            <vs-divider position="center">
+                                <h2>Datos del paciente</h2>
+                            </vs-divider>
+                            <vs-row vs-type="flex" vs-justify="center" vs-align="center">
+                                <vs-col vs-type="flex" vs-justify="center" class="text-subtitle" vs-align="center">
+                                    Cedula: {{paciente.reporte.cedula}}
+                                </vs-col>
+                            </vs-row>
+
+                            <!-- TEMPERATURA -->
+                            <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Temp. Entrada</span>
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Temp. Salida</span>
+                                </vs-col>
+                            </vs-row>
+                            <vs-row class="text-important">
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{paciente.reporte.tempEntrada.toFixed(2)}} {{paciente.reporte.unidadTemp}}
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{paciente.reporte.tempEntrada.toFixed(2)}} {{paciente.reporte.unidadTemp}}
+                                </vs-col>
+                            </vs-row>
+                            <vs-divider></vs-divider>
+                            <!-- ------------------------------------------------- -->
+                            <!-- VOLUMEN GAS -->
+                            <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Vol. Gas</span>
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Frec. Gas</span>
+                                </vs-col>
+                            </vs-row>
+                            <vs-row class="text-important">
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{paciente.reporte.volGas.toFixed(2)}} {{paciente.reporte.unidadVolumen}}
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{paciente.reporte.frecGas.toFixed(2)}} {{paciente.reporte.unidadFrecuencia}}
+                                </vs-col>
+                            </vs-row>
+
+                            <!-- ------------------------------------------------- -->
+                            <!-- VOLUMEN GAS -->
+
+                            <vs-divider></vs-divider>
+                            <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Presion Min.</span>
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Presion Max.</span>
+                                </vs-col>
+                            </vs-row>
+                            <vs-row class="text-important">
+
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{paciente.reporte.presionMinima.toFixed(2)}} {{paciente.reporte.unidadPresion}}
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{paciente.reporte.presionMaxima.toFixed(2)}} {{paciente.reporte.unidadPresion}}
+                                </vs-col>
+                            </vs-row>
+                            <vs-divider></vs-divider>
+                            <!------------------------------------------->
+                            <!-- HUMEDAD MEZCLA-->
+                            <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Mezcla</span>
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    <span>Humedad</span>
+                                </vs-col>
+                            </vs-row>
+                            <vs-row class="text-important">
+
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{(paciente.reporte.mezcla * 100).toFixed(2)}} {{paciente.reporte.unidadHumedad}}
+                                </vs-col>
+                                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                                    {{(paciente.reporte.humedadAire * 100).toFixed(2)}}
+                                    {{paciente.reporte.unidadHumedad}}
+                                </vs-col>
+                            </vs-row>
+                            <vs-divider></vs-divider>
+                        </vs-row>
+                    </vs-col>
+                </vs-row>
+            </vs-card>
+        </vs-col>
+    </vs-row>
 </template>
 
 <script>
-    import ECharts from 'vue-echarts'
     import 'echarts/lib/chart/line'
     import 'echarts/lib/component/polar'
     import SockJS from "sockjs-client";
     import {Stomp} from "@stomp/stompjs";
+    import LineChart from "./components/LineChart";
     import {REPORTES_URL} from "./config/config";
+    import {convertirFecha} from '@/utils'
 
     let stompClient = null;
 
     export default {
         name: "App",
         data() {
-            /*const randomData = () => {
-                now = new Date(+now + oneDay);
-                value = value + Math.random() * 21 - 10;
-                return {
-                    name: now.toString(),
-                    value: [
-                        [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                        Math.round(value)
-                    ]
-                };
-            }
-            var data = [];
-            var now = +new Date(1997, 9, 3);
-            var oneDay = 24 * 3600 * 1000;
-            var value = Math.random() * 1000;
-            for (var i = 0; i < 1000; i++) {
-                data.push(randomData());
-            }*/
             return {
-                values: [],
-                polar: {
-                    title: {
-                        text: 'Grafico'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        formatter: function (params) {
-                            params = params[0];
-                            var date = new Date(params.name);
-                            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-                        },
-                        axisPointer: {
-                            animation: false
-                        }
-                    },
-                    xAxis: {
-                        type: 'time',
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    yAxis: {
-                        type: 'value',
-                        boundaryGap: [0, '100%'],
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    series: [{
-                        name: '模拟数据',
-                        type: 'line',
-                        showSymbol: false,
-                        hoverAnimation: false,
-                        data: this.values
-                    }]
-                }
+                pacientes: [],
+                lineChartData: {
+                    presionSalida: [],
+                    presionEntrada: [],
+                    fechas: []
+                },
+
             }
-        },
+        }
+        ,
         components: {
-            ECharts
+            LineChart
+        }
+        ,
+        methods: {
+            modifyChart(reporte) {
+
+                if (this.pacientes.length <= 0) {
+                    let fecha = this.parseFecha(reporte.time, 'LT');
+                    let paciente = {
+                        lineChartData: {
+                            presionSalida: [reporte.presionSalida],
+                            presionEntrada: [reporte.presionEntrada],
+                            fechas: [fecha]
+                        },
+                        reporte
+                    }
+                    this.pacientes.push(paciente);
+                } else {
+                    let paciente = this.pacientes.findIndex((paciente) => paciente.reporte.cedula === reporte.cedula)
+                    if (paciente !== -1) {
+                        console.log(paciente)
+
+                        if (this.pacientes[paciente].lineChartData.presionEntrada.length >= 20) {
+                            this.pacientes[paciente].lineChartData.presionEntrada.shift();
+                            this.pacientes[paciente].lineChartData.presionSalida.shift();
+                            this.pacientes[paciente].lineChartData.fechas.shift();
+                        }
+
+                        this.pacientes[paciente].lineChartData.presionEntrada.push(reporte.presionEntrada);
+                        this.pacientes[paciente].lineChartData.presionSalida.push(reporte.presionSalida);
+                        let fecha = this.parseFecha(reporte.time, 'LT');
+                        this.pacientes[paciente].lineChartData.fechas.push(fecha);
+                        this.pacientes[paciente].reporte = reporte;
+
+                    } else {
+                        let fecha = this.parseFecha(reporte.time, 'LT');
+                        let paciente = {
+                            lineChartData: {
+                                presionSalida: [reporte.presionSalida],
+                                presionEntrada: [reporte.presionEntrada],
+                                fechas: [fecha]
+                            },
+                            reporte
+                        }
+                        this.pacientes.push(paciente);
+                    }
+                }
+            },
+            parseFecha(unix_timestamp, formato) {
+                return convertirFecha(unix_timestamp, formato);
+            }
         },
         mounted() {
+            this.lineChartData.fechas = [];
+            this.lineChartData.presionSalida = [];
+            this.lineChartData.presionEntrada = [];
             this.$nextTick(() => {
                 console.log("frame");
                 let socket = new SockJS(REPORTES_URL);
@@ -95,14 +199,68 @@
                     console.log(frame);
                     stompClient.subscribe("/alertas/reportes", val => {
                         let mensaje = JSON.parse(val.body);
-                        console.log(mensaje);
+                        console.log(mensaje)
+                        this.modifyChart(mensaje)
                     });
                 });
             });
         }
-    };
+    }
+    ;
 </script>
 
-<style>
+<style lang="scss">
+    $font-family-sans-serif: "Montserrat", Helvetica, Arial, sans-serif !default;
+    $font-family-serif: Georgia, "Times New Roman", Times, serif !default;
+    $font-size-base: 14px !default;
+    $theme-background: #f8f8f8;
+
+    html {
+        font-size: $font-size-base;
+        height: 100%;
+        width: 100%;
+        line-height: 1.5;
+        letter-spacing: 0.01rem;
+    }
+
+    body {
+        font-family: $font-family-sans-serif;
+        background: $theme-background;
+        font-weight: 400;
+        overflow-x: hidden;
+        max-width: 100%;
+        height: 100%;
+        transition: background-color .3s ease;
+    }
+
+    #app {
+        min-height: 100%;
+    }
+
+    .text-important {
+        color: #3888fa;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .text-subtitle {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .vs-divider {
+        margin-bottom: 5px !important;
+        margin-top: 20px !important;
+    }
+
+    .col-der {
+        margin: auto 15px auto 15px !important;
+    }
+
+    .text-header {
+        font-size: 14px;
+    }
+
 
 </style>

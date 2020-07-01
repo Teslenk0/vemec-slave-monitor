@@ -1,18 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 
+import Vuesax from 'vuesax'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vuesax/dist/vuesax.css' //Vuesax styles
 
 Vue.config.productionTip = false
 
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+Vue.use(Vuesax)
+
 
 
 new Vue({
