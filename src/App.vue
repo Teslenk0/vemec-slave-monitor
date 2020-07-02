@@ -140,7 +140,6 @@
         ,
         methods: {
             modifyChart(reporte) {
-
                 if (this.pacientes.length <= 0) {
                     let fecha = this.parseFecha(reporte.time, 'LT');
                     let paciente = {
