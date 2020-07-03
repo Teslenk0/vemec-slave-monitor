@@ -24,13 +24,13 @@ async function script() {
   let nivelBateria = null;
   while (true) {
 
-    bateria = !bateria;
+    /*bateria = !bateria;
     if(bateria){
       nivelBateria = Math.floor(Math.random() * (+100 - +0)) + +0;
     }
     else{
       nivelBateria = null;
-    }
+    }*/
 
     data = {
       presionMaxima: parseFloat(Math.random().toFixed(2) * 30),
@@ -46,15 +46,16 @@ async function script() {
       alerta: alertas[(Math.random().toFixed(0) - 1) * 4],
       time: convertirFecha(new Date(), "YYYY-MM-DD HH:mm:ss"),
       //cedula: Math.floor(Math.random() * 3).toString(),
-      cedula:32221115,
+      cedula:50138887,
       unidadPresion: "mBar",
       unidadTemp: "°C",
       unidadHumedad: "%",
       unidadFrecuencia: "v/min",
       unidadVolumen: "cc",
-      ppm: Math.floor(Math.random() * (+250 - +30)) + +30,
-      bateria,
-      nivelBateria
+      ppm:60,
+      //ppm: Math.floor(Math.random() * (+250 - +30)) + +30,
+      bateria:false,
+      nivelBateria:null
     }
     axios.post(reportesApi, data).then(res => console.log("se acaba de ingresar un reporte")).catch(err => console.log(err))
 
