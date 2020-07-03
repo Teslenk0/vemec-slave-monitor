@@ -126,8 +126,7 @@
             return {
                 pacientes: [],
                 lineChartData: {
-                    presionSalida: [],
-                    presionEntrada: [],
+                    ppm:[],
                     fechas: []
                 },
 
@@ -144,8 +143,7 @@
                     let fecha = this.parseFecha(reporte.time, 'LT');
                     let paciente = {
                         lineChartData: {
-                            presionSalida: [reporte.presionSalida],
-                            presionEntrada: [reporte.presionEntrada],
+                            ppm: [reporte.ppm],
                             fechas: [fecha]
                         },
                         reporte
@@ -156,14 +154,12 @@
                     if (paciente !== -1) {
                         console.log(paciente)
 
-                        if (this.pacientes[paciente].lineChartData.presionEntrada.length >= 20) {
-                            this.pacientes[paciente].lineChartData.presionEntrada.shift();
-                            this.pacientes[paciente].lineChartData.presionSalida.shift();
+                        if (this.pacientes[paciente].lineChartData.ppm.length >= 20) {
+                            this.pacientes[paciente].lineChartData.ppm.shift();
                             this.pacientes[paciente].lineChartData.fechas.shift();
                         }
 
-                        this.pacientes[paciente].lineChartData.presionEntrada.push(reporte.presionEntrada);
-                        this.pacientes[paciente].lineChartData.presionSalida.push(reporte.presionSalida);
+                        this.pacientes[paciente].lineChartData.ppm.push(reporte.ppm);
                         let fecha = this.parseFecha(reporte.time, 'LT');
                         this.pacientes[paciente].lineChartData.fechas.push(fecha);
                         this.pacientes[paciente].reporte = reporte;
@@ -172,8 +168,7 @@
                         let fecha = this.parseFecha(reporte.time, 'LT');
                         let paciente = {
                             lineChartData: {
-                                presionSalida: [reporte.presionSalida],
-                                presionEntrada: [reporte.presionEntrada],
+                                ppm: [reporte.ppm],
                                 fechas: [fecha]
                             },
                             reporte
@@ -188,8 +183,7 @@
         },
         mounted() {
             this.lineChartData.fechas = [];
-            this.lineChartData.presionSalida = [];
-            this.lineChartData.presionEntrada = [];
+            this.lineChartData.ppm = [];
             this.$nextTick(() => {
                 console.log("frame");
                 let socket = new SockJS(REPORTES_URL);

@@ -225,8 +225,7 @@ export default {
   data() {
     return {
       lineChartData: {
-        presionSalida:[],
-        presionEntrada:[],
+        ppm:[],
         fechas:[]
       },
       dialogGrafica: false,

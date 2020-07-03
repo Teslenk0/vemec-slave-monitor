@@ -61,7 +61,7 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ presionSalida, presionEntrada, fechas } = {}) {
+    setOptions({ ppm, fechas } = {}) {
       this.chart.setOption({
         xAxis: {
           data: fechas.map(function (str) {
@@ -88,10 +88,10 @@ export default {
           }
         },
         legend: {
-          data: ['Presion Salida', 'Presion Entrada']
+          data: ['ppm']
         },
         series: [{
-          name: 'Presion Salida', itemStyle: {
+          name: 'ppm', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -102,30 +102,11 @@ export default {
           },
           smooth: true,
           type: 'line',
-          data: presionSalida,
+          data: ppm,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
-        {
-          name: 'Presion Entrada',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: presionEntrada,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+        ]
       })
     }
   }
