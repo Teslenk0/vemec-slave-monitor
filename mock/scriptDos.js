@@ -46,7 +46,7 @@ async function script() {
       alerta: alertas[(Math.random().toFixed(0) - 1) * 4],
       time: convertirFecha(new Date(), "YYYY-MM-DD HH:mm:ss"),
       //cedula: Math.floor(Math.random() * 3).toString(),
-      cedula:50138887,
+      cedula:491,
       unidadPresion: "mBar",
       unidadTemp: "°C",
       unidadHumedad: "%",
@@ -60,7 +60,7 @@ async function script() {
     axios.post(reportesApi, data).then(res => console.log("se acaba de ingresar un reporte")).catch(err => console.log(err))
 
     // espera 1 sec
-    await sleep(1000);
+    await sleep(500);
   }
 }
 
