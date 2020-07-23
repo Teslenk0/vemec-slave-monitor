@@ -1,156 +1,170 @@
 <template>
-  <vs-row vs-justify="center">
-    <vs-col
-      style="margin-top: 16px; flex-direction: column;"
-      vs-type="flex"
-      v-if="pacientes.length <= 0"
-      vs-justify="center"
-      vs-align="center"
-      vs-w="8"
-    >
-      <h1 class="title-healthy">No hay pacientes con inconvenientes en la sala</h1>
-      <img src="./assets/img/healthy.png" alt="Imagen de saludable" />
-    </vs-col>
+  <div>
+    <vs-row vs-justify="center">
+      <vs-col
+        style="margin-top: 16px; flex-direction: column;"
+        vs-type="flex"
+        v-if="pacientes.length <= 0"
+        vs-justify="center"
+        vs-align="center"
+        vs-w="8"
+      >
+        <h1 class="title-healthy">No hay pacientes con inconvenientes en la sala</h1>
+        <img src="./assets/img/healthy.png" alt="Imagen de saludable" />
+      </vs-col>
 
-    <vs-col
-      style="margin-top: 16px"
-      v-for="paciente in pacientes"
-      v-bind:key="paciente.reporte.cedula"
-      vs-type="flex"
-      vs-justify="center"
-      vs-align="center"
-      vs-w="8"
-    >
-      <vs-card>
-        <vs-row style="margin-top: 4px">
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="9">
-            <line-chart :chart-data="paciente.lineChartData" />
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-w="3">
-            <vs-row
-              vs-type="flex"
-              vs-justify="center"
-              class="col-der"
-              vs-align="center"
-              style="flex-direction: column"
-            >
-              <vs-divider position="center">
-                <h2>Datos del paciente</h2>
-              </vs-divider>
-              <vs-row vs-type="flex" vs-justify="center" vs-align="center">
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  class="text-subtitle"
-                  vs-align="center"
-                >Cedula: {{paciente.reporte.cedula}}</vs-col>
-              </vs-row>
+      <vs-col
+        style="margin-top: 16px"
+        v-for="(paciente, index) in pacientes"
+        v-bind:key="index"
+        vs-type="flex"
+        vs-justify="center"
+        vs-align="center"
+        vs-w="8"
+      >
+        <vs-card v-if="((page*2-1<=index && index <= page*2) && (index !== 0))">
+          <vs-row style="margin-top: 4px">
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="9">
+              <line-chart :chart-data="paciente.lineChartData" />
+            </vs-col>
+            <vs-col vs-type="flex" vs-justify="center" vs-w="3">
+              <vs-row
+                vs-type="flex"
+                vs-justify="center"
+                class="col-der"
+                vs-align="center"
+                style="flex-direction: column"
+              >
+                <vs-divider position="center">
+                  <h2>Datos del paciente</h2>
+                </vs-divider>
+                <vs-row vs-type="flex" vs-justify="center" vs-align="center">
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    class="text-subtitle"
+                    vs-align="center"
+                  >Cedula: {{paciente.reporte.cedula}}</vs-col>
+                </vs-row>
 
-              <!-- TEMPERATURA -->
-              <vs-row vs-type="flex" class="text-header" vs-justify="center">
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Temp. Entrada</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Temp. Salida</span>
-                </vs-col>
-              </vs-row>
-              <vs-row class="text-important">
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{paciente.reporte.tempEntrada.toFixed(2)}} {{paciente.reporte.unidadTemp}}</vs-col>
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{paciente.reporte.tempEntrada.toFixed(2)}} {{paciente.reporte.unidadTemp}}</vs-col>
-              </vs-row>
-              <vs-divider></vs-divider>
-              <!-- ------------------------------------------------- -->
-              <!-- VOLUMEN GAS -->
-              <vs-row vs-type="flex" class="text-header" vs-justify="center">
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Vol. Gas</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Frec. Gas</span>
-                </vs-col>
-              </vs-row>
-              <vs-row class="text-important">
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{paciente.reporte.volGas.toFixed(2)}} {{paciente.reporte.unidadVolumen}}</vs-col>
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{paciente.reporte.frecGas.toFixed(2)}} {{paciente.reporte.unidadFrecuencia}}</vs-col>
-              </vs-row>
+                <!-- TEMPERATURA -->
+                <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Temp. Entrada</span>
+                  </vs-col>
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Temp. Salida</span>
+                  </vs-col>
+                </vs-row>
+                <vs-row class="text-important">
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{paciente.reporte.tempEntrada.toFixed(2)}} {{paciente.reporte.unidadTemp}}</vs-col>
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{paciente.reporte.tempEntrada.toFixed(2)}} {{paciente.reporte.unidadTemp}}</vs-col>
+                </vs-row>
+                <vs-divider></vs-divider>
+                <!-- ------------------------------------------------- -->
+                <!-- VOLUMEN GAS -->
+                <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Vol. Gas</span>
+                  </vs-col>
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Frec. Gas</span>
+                  </vs-col>
+                </vs-row>
+                <vs-row class="text-important">
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{paciente.reporte.volGas.toFixed(2)}} {{paciente.reporte.unidadVolumen}}</vs-col>
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{paciente.reporte.frecGas.toFixed(2)}} {{paciente.reporte.unidadFrecuencia}}</vs-col>
+                </vs-row>
 
-              <!-- ------------------------------------------------- -->
-              <!-- VOLUMEN GAS -->
+                <!-- ------------------------------------------------- -->
+                <!-- VOLUMEN GAS -->
 
-              <vs-divider></vs-divider>
-              <vs-row vs-type="flex" class="text-header" vs-justify="center">
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Presion Min.</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Presion Max.</span>
-                </vs-col>
+                <vs-divider></vs-divider>
+                <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Presion Min.</span>
+                  </vs-col>
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Presion Max.</span>
+                  </vs-col>
+                </vs-row>
+                <vs-row class="text-important">
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{paciente.reporte.presionMinima.toFixed(2)}} {{paciente.reporte.unidadPresion}}</vs-col>
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{paciente.reporte.presionMaxima.toFixed(2)}} {{paciente.reporte.unidadPresion}}</vs-col>
+                </vs-row>
+                <vs-divider></vs-divider>
+                <!------------------------------------------->
+                <!-- HUMEDAD MEZCLA-->
+                <vs-row vs-type="flex" class="text-header" vs-justify="center">
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Mezcla</span>
+                  </vs-col>
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <span>Humedad</span>
+                  </vs-col>
+                </vs-row>
+                <vs-row class="text-important">
+                  <vs-col
+                    vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center"
+                    vs-w="6"
+                  >{{(paciente.reporte.mezcla * 100).toFixed(2)}} {{paciente.reporte.unidadHumedad}}</vs-col>
+                  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    {{(paciente.reporte.humedadAire * 100).toFixed(2)}}
+                    {{paciente.reporte.unidadHumedad}}
+                  </vs-col>
+                </vs-row>
+                <vs-divider></vs-divider>
               </vs-row>
-              <vs-row class="text-important">
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{paciente.reporte.presionMinima.toFixed(2)}} {{paciente.reporte.unidadPresion}}</vs-col>
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{paciente.reporte.presionMaxima.toFixed(2)}} {{paciente.reporte.unidadPresion}}</vs-col>
-              </vs-row>
-              <vs-divider></vs-divider>
-              <!------------------------------------------->
-              <!-- HUMEDAD MEZCLA-->
-              <vs-row vs-type="flex" class="text-header" vs-justify="center">
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Mezcla</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  <span>Humedad</span>
-                </vs-col>
-              </vs-row>
-              <vs-row class="text-important">
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >{{(paciente.reporte.mezcla * 100).toFixed(2)}} {{paciente.reporte.unidadHumedad}}</vs-col>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                  {{(paciente.reporte.humedadAire * 100).toFixed(2)}}
-                  {{paciente.reporte.unidadHumedad}}
-                </vs-col>
-              </vs-row>
-              <vs-divider></vs-divider>
-            </vs-row>
-          </vs-col>
-        </vs-row>
-      </vs-card>
-    </vs-col>
-  </vs-row>
+            </vs-col>
+          </vs-row>
+        </vs-card>
+      </vs-col>
+    </vs-row>
+    <vs-row>
+      <vs-col vs-type="flex"
+                    vs-justify="center"
+                    vs-align="center">
+        <el-pagination
+          v-show="pacientes.length > 0"
+          layout="prev, pager, next"
+          :page-count="numberOfPages"
+          :current-page.sync="page"
+        ></el-pagination>
+      </vs-col>
+    </vs-row>
+  </div>
 </template>
 
 <script>
@@ -171,12 +185,18 @@ export default {
       pacientes: [],
       lineChartData: {
         ppm: [],
-        fechas: []
-      }
+        fechas: [],
+      },
+      page: 1,
     };
   },
   components: {
-    LineChart
+    LineChart,
+  },
+  computed: {
+    numberOfPages() {
+      return Math.ceil((this.pacientes.length - 1) / 2);
+    },
   },
   methods: {
     modifyChart(reporte) {
@@ -185,18 +205,18 @@ export default {
         let paciente = {
           lineChartData: {
             ppm: [reporte.ppm],
-            fechas: [fecha]
+            fechas: [fecha],
           },
-          reporte
+          reporte,
         };
-        this.pacientes.push(paciente);
+        this.pacientes[1] = paciente;
       } else {
-        let paciente = this.pacientes.findIndex(
-          paciente => paciente.reporte.cedula === reporte.cedula
-        );
-        if (paciente !== -1) {
-          console.log(paciente);
+        let paciente = this.pacientes.findIndex((paciente, index) => {
+          if (index !== 0) return paciente.reporte.cedula === reporte.cedula;
+          else return false;
+        });
 
+        if (paciente !== -1) {
           if (this.pacientes[paciente].lineChartData.ppm.length >= 20) {
             this.pacientes[paciente].lineChartData.ppm.shift();
             this.pacientes[paciente].lineChartData.fechas.shift();
@@ -211,9 +231,9 @@ export default {
           let paciente = {
             lineChartData: {
               ppm: [reporte.ppm],
-              fechas: [fecha]
+              fechas: [fecha],
             },
-            reporte
+            reporte,
           };
           this.pacientes.push(paciente);
         }
@@ -221,7 +241,7 @@ export default {
     },
     parseFecha(unix_timestamp, formato) {
       return convertirFecha(unix_timestamp, formato);
-    }
+    },
   },
   mounted() {
     this.lineChartData.fechas = [];
@@ -230,16 +250,16 @@ export default {
       console.log("frame");
       let socket = new SockJS(REPORTES_URL);
       stompClient = Stomp.over(socket);
-      stompClient.connect({}, frame => {
+      stompClient.connect({}, (frame) => {
         console.log(frame);
-        stompClient.subscribe("/alertas/reportes", val => {
+        stompClient.subscribe("/alertas/reportes", (val) => {
           let mensaje = JSON.parse(val.body);
           console.log(mensaje);
           this.modifyChart(mensaje);
         });
       });
     });
-  }
+  },
 };
 </script>
 
